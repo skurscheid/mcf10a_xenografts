@@ -1,15 +1,15 @@
-sample_id	library	condition	digest
-MCF10A	H2AZ	WT	high
-MCF10A	H2AZ	WT	low
-MCF10A	Input	WT	high
-MCF10A	Input	WT	low
-MCF10A	Input	shZ_KD	high
-MCF10A	Input	shZ_KD	low
-MCF10A	H2AZ	TGFb	high
-MCF10A	H2AZ	TGFb	low
-MCF10A	Input	TGFb	high
-MCF10A	Input	TGFb	low
-MCF10ACa1a	H2AZ	WT	high
-MCF10ACa1a	H2AZ	WT	low
-MCF10ACa1a	Input	WT	high
-MCF10ACa1a	Input	WT	low
+sample_id	sample	library	condition	description
+f00	MCF10A	H2AZ	WT	high_digest
+f01	MCF10A	H2AZ	WT	low_digest
+f02	MCF10A	Input	WT	high_digest
+f03	MCF10A	Input	WT	low_digest
+f04	MCF10A	Input	shZ_KD	high_digest
+f05	MCF10A	Input	shZ_KD	low_digest
+f06	MCF10A	H2AZ	TGFb	high_digest
+f07	MCF10A	H2AZ	TGFb	low_digest
+f08	MCF10A	Input	TGFb	high_digest
+f09	MCF10A	Input	TGFb	low_digest
+f10	MCF10ACa1a	H2AZ	WT	high_digest
+f11	MCF10ACa1a	H2AZ	WT	low_digest
+f12	MCF10ACa1a	Input	WT	high_digest
+f13	MCF10ACa1a	Input	WT	low_digest
