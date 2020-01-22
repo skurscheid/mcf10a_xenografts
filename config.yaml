@@ -1,4 +1,4 @@
-samples: samples.tsv
+gisamples: samples.tsv
 units: units.tsv
 
 params:

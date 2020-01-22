@@ -26,7 +26,7 @@ rule all_fastp_rna_seq:
     input:
         expand("fastp/trimmed/pe/{batch}/{sample}.{ext}.fastq.gz",
                 batch = "N1902403_RD_30-210828544_eukRNASEQ",
-                sample = ["KDD2-2_L5"],
+                sample = list(units["sample"]),
                 ext = ["end1", "end2"])
 
 include: "rules/fastp.smk"
