@@ -15,7 +15,11 @@ For usage, include this in your workflow.
 
 def get_fastq_rna_seq(wildcards):
     """ returns fastq files for given sample_id """
-    return units.loc[(wildcards["sample"], wildcards["batch"]), ["fq1", "fq2"]].dropna()
+    fqs = units.loc[(wildcards["sample"], wildcards["batch"]), ["fq1", "fq2"]].dropna()
+    fq1 = "raw_data/" + wildcards["batch"] + "/" + fqs[0]
+    fq2 = "raw_data/" + wildcards["batch"] + "/" + fqs[1]
+    l = [fq1, fq2]
+    return(l)
 
 rule run_fastp_pe_rna_seq:
     conda:

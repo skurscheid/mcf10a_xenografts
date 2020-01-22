@@ -1,8 +1,16 @@
 # The main entry point of your workflow.
 # After configuring, running snakemake -n in a clone of this repository should successfully execute a dry-run of the workflow.
+#
+import os
+import pandas as pd
+from snakemake.utils import validate, min_version
 
+##### set minimum snakemake version #####
 
-configfile: "config.yaml"
+min_version("5.1.2")
+
+units = pd.read_csv(config["units"], sep = "\t").set_index(["sample", "batch"], drop=False)
+
 report: "report/workflow.rst"
 
 # Allow users to fix the underlying OS via singularity.
@@ -16,7 +24,7 @@ rule all:
 
 rule all_fastp_rna_seq:
     input:
-        expand("fastp/trimmed/pe/{batch}/{sample}.{ext}.fq.gz",
+        expand("fastp/trimmed/pe/{batch}/{sample}.{ext}.fastq.gz",
                 batch = "N1902403_RD_30-210828544_eukRNASEQ",
                 sample = ["KDD2-2_L5"],
                 ext = ["end1", "end2"])
