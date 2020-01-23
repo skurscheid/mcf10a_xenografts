@@ -15,9 +15,9 @@ For usage, include this in your workflow.
 
 def get_fastq_rna_seq(wildcards):
     """ returns fastq files for given sample_id """
-    fqs = units.loc[(wildcards["sample"], wildcards["batch"]), ["fq1", "fq2"]].dropna()
-    fq1 = "raw_data/" + wildcards["batch"] + "/" + fqs[0]
-    fq2 = "raw_data/" + wildcards["batch"] + "/" + fqs[1]
+    fqs = units.loc[(wildcards["sample"], wildcards["batch"], wildcards["library"]), ["fq1", "fq2"]].dropna()
+    fq1 = "raw_data/" + wildcards["library"] + "/" + wildcards["batch"] + "/" + fqs[0]
+    fq2 = "raw_data/" + wildcards["library"] + "/" + wildcards["batch"] + "/" + fqs[1]
     l = [fq1, fq2]
     return(l)
 
@@ -31,10 +31,10 @@ rule run_fastp_pe_rna_seq:
     input:
         get_fastq_rna_seq
     output:
-        trimmed_read1 = "fastp/trimmed/pe/{batch}/{sample}.end1.fastq.gz",
-        trimmed_read2 = "fastp/trimmed/pe/{batch}/{sample}.end2.fastq.gz",
-        report_html = "fastp/report/pe/{batch}/{sample}.fastp.html",
-        report_json = "fastp/report/pe/{batch}/{sample}.fastp.json"
+        trimmed_read1 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end1.fastq.gz",
+        trimmed_read2 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end2.fastq.gz",
+        report_html = "fastp/report/pe/{library}/{batch}/{sample}.fastp.html",
+        report_json = "fastp/report/pe/{library}/{batch}/{sample}.fastp.json"
     shell:
         """
            fastp -i {input[0]} -I {input[1]} -o {output.trimmed_read1} -O {output.trimmed_read2}\

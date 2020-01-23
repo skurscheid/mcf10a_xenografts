@@ -9,7 +9,7 @@ from snakemake.utils import validate, min_version
 
 min_version("5.1.2")
 
-units = pd.read_csv(config["units"], sep = "\t").set_index(["sample", "batch"], drop=False)
+units = pd.read_csv(config["units"], sep = "\t").set_index(["sample", "batch", "library"], drop=False)
 
 report: "report/workflow.rst"
 
@@ -24,7 +24,7 @@ rule all:
 
 rule all_fastp_rna_seq:
     input:
-        expand("fastp/trimmed/pe/{batch}/{sample}.{ext}.fastq.gz",
+        expand("fastp/trimmed/pe/RNA-Seq/{batch}/{sample}.{ext}.fastq.gz",
                 batch = "N1902403_RD_30-210828544_eukRNASEQ",
                 sample = list(units["sample"]),
                 ext = ["end1", "end2"])
