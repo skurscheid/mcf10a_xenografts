@@ -21,6 +21,7 @@ params:
       gadi: "/scratch/kv78/References/Genomes/Homo_sapiens/GRCh38_ensembl84/canonical/index/hg38_ensembl84"
   fastp: ""
   kallisto:
+    cli_params: "--bootstrap-samples=20"
     index:
       mmus_hsap_ensembl99: 
         gadi: "/scratch/kv78/References/Transcriptomes/mmus_hsap_ensembl99.ki"
