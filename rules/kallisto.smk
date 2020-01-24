@@ -19,7 +19,7 @@ rule kallisto_quant:
     version:
         "1"
     threads:
-        16
+        8 
     params:
         cli_params = config["params"]["kallisto"]["cli_params"]
     input:
