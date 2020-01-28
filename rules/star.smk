@@ -26,18 +26,18 @@ rule star_align:
     input:
         fq1 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end1.fastq.gz",
         fq2 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end2.fastq.gz",
-        index = lambda wildcards: directory(config["params"]["STAR"]["index"]wildcards["ref_index"])
+        index = directory(lambda wildcards: config["params"]["STAR"]["index"][wildcards["ref_index"]])
     output:
         dir = directory("star/{library}/{ref_index}/{batch}/{sample}/")
     shell:
         """"
-        STAR --runThreadN {threads}\
-             --genomeDir {input.index}\
-             --readFilesIn {input.fq1} {input.fq2}\
-             --outFileNamePrefix {output.dir}\
-             --outTmpDir {params.tempDir}\
-             --outReadsUnmapped Fastq\
-             --outSAMtype BAM\
-             {params.encodeOptions}\
-             --quantMode GeneCounts
+          STAR --runThreadN {threads}\
+               --genomeDir {input.index}\
+               --readFilesIn {input.fq1} {input.fq2}\
+               --outFileNamePrefix {output.dir}\
+               --outTmpDir {params.tempDir}\
+               --outReadsUnmapped Fastq\
+               --outSAMtype BAM\
+               {params.encodeOptions}\
+               --quantMode GeneCounts
         """"
