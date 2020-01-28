@@ -35,5 +35,12 @@ rule all_kallisto_quant:
                 batch = "N1902403_RD_30-210828544_eukRNASEQ",
                 sample = list(units["sample"]))
 
+rule all_star_align:
+    input:
+        expand("star/RNA-Seq/{batch}/{sample}/",
+                batch = "N1902403_RD_30-210828544_eukRNASEQ",
+                sample = list(units["sample"])[0])
+
 include: "rules/fastp.smk"
 include: "rules/kallisto.smk"
+include: "rules/star.smk"

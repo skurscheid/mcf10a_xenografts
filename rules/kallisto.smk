@@ -30,10 +30,10 @@ rule kallisto_quant:
         directory("kallisto/{library}/{batch}/{sample}")
     shell:
         """
-           kallisto quant {input.fq1} {input.fq2}\
-                    {params.cli_params}\
-                    --index {input.index}\
-                    --threads={threads}\
-                    --output {output}
+        kallisto quant {input.fq1} {input.fq2}\
+                {params.cli_params}\
+                --index {input.index}\
+                --threads={threads}\
+                --output {output}
         """
 
