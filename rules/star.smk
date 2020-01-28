@@ -31,13 +31,13 @@ rule star_align:
         dir = directory("star/{library}/{ref_index}/{batch}/{sample}/")
     shell:
         """"
-          STAR --runThreadN {threads}\
-               --genomeDir {input.index}\
-               --readFilesIn {input.fq1} {input.fq2}\
-               --outFileNamePrefix {output.dir}\
-               --outTmpDir {params.tempDir}\
-               --outReadsUnmapped Fastq\
-               --outSAMtype BAM\
-               {params.encodeOptions}\
-               --quantMode GeneCounts
+            STAR --runThreadN {threads}\
+                --genomeDir {input.index}\
+                --readFilesIn {input.fq1} {input.fq2}\
+                --outFileNamePrefix {output.dir}\
+                --outTmpDir {params.tempDir}\
+                --outReadsUnmapped Fastq\
+                --outSAMtype BAM\
+                {params.encodeOptions}\
+                --quantMode GeneCounts
         """"
