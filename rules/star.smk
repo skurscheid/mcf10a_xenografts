@@ -22,15 +22,13 @@ rule star_align:
         8 
     params:
         tempDir = directory("star/temp/{library}/{batch}/{sample}/"),
-        encodeOptions = "--outFilterType BySJout --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000\
-                         --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999\
-                         --outFilterMismatchNoverReadLmax 0.04"
+        encodeOptions = "--outFilterType BySJout --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04"
     input:
         fq1 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end1.fastq.gz",
         fq2 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end2.fastq.gz",
         index = lambda wildcards: directory(config["params"]["STAR"]["index"]wildcards["ref_index"])
     output:
-        dir = directory("star/{library}/{batch}/{sample}/")
+        dir = directory("star/{library}/{ref_index}/{batch}/{sample}/")
     shell:
         """"
         STAR --runThreadN {threads}\

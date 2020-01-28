@@ -28,7 +28,7 @@ params:
   STAR:
     index:
       mmus_ensembl99:
-        gadi: ""
+        gadi: "/scratch/kv78/References/Transcriptomes/Mus_musculus/GRCm38_ensembl99/STAR"
       hsap_ensembl99:
-        gadi: ""
+        gadi: "/scratch/kv78/References/Transcriptomes/Homo_sapiens/GRCh38_ensembl99/STAR"
 
