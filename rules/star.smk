@@ -21,21 +21,21 @@ rule star_align:
     threads:
         8 
     params:
-        tempDir = directory("star/temp/{library}/{batch}/{sample}"),
         encodeOptions = "--outFilterType BySJout --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04"
     input:
         fq1 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end1.fastq.gz",
         fq2 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end2.fastq.gz",
         index = lambda wildcards: config["params"]["STAR"]["index"][wildcards["ref_index"]]["gadi"]
     output:
-        directory("star/{library}/{ref_index}/{batch}/{sample}/")
+        permdir = directory("star/{library}/{ref_index}/{batch}/{sample}/"),
+        tempDir = directory("star/temp/{library}/{batch}/{sample}")
     shell:
         """
             STAR --runThreadN {threads}\
                 --genomeDir {input.index}\
                 --readFilesIn {input.fq1} {input.fq2}\
-                --outFileNamePrefix {output}\
-                --outTmpDir {params.tempDir}\
+                --outFileNamePrefix {output.permDir}\
+                --outTmpDir {output.tempDir}\
                 --outReadsUnmapped Fastq\
                 --outSAMtype BAM\
                 --quantMode GeneCounts\
