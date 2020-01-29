@@ -21,23 +21,23 @@ rule star_align:
     threads:
         8 
     params:
-        tempDir = directory("star/temp/{library}/{batch}/{sample}/"),
+        tempDir = directory("star/temp/{library}/{batch}/{sample}"),
         encodeOptions = "--outFilterType BySJout --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04"
     input:
         fq1 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end1.fastq.gz",
         fq2 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end2.fastq.gz",
-        index = directory(lambda wildcards: config["params"]["STAR"]["index"][wildcards["ref_index"]])
+        index = lambda wildcards: config["params"]["STAR"]["index"][wildcards["ref_index"]]["gadi"]
     output:
-        dir = directory("star/{library}/{ref_index}/{batch}/{sample}/")
+        directory("star/{library}/{ref_index}/{batch}/{sample}/")
     shell:
-        """"
+        """
             STAR --runThreadN {threads}\
                 --genomeDir {input.index}\
                 --readFilesIn {input.fq1} {input.fq2}\
-                --outFileNamePrefix {output.dir}\
+                --outFileNamePrefix {output}\
                 --outTmpDir {params.tempDir}\
                 --outReadsUnmapped Fastq\
                 --outSAMtype BAM\
-                {params.encodeOptions}\
-                --quantMode GeneCounts
-        """"
+                --quantMode GeneCounts\
+                {params.encodeOptions}
+        """

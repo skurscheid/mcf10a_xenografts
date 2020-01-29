@@ -40,7 +40,7 @@ rule all_star_align:
         expand("star/RNA-Seq/{ref_index}/{batch}/{sample}/",
                 ref_index = ["mmus_ensembl99", "hsap_ensembl99"],
                 batch = "N1902403_RD_30-210828544_eukRNASEQ",
-                sample = list(units["sample"]))
+                sample = list(units["sample"])[0])
 
 include: "rules/fastp.smk"
 include: "rules/kallisto.smk"

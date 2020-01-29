@@ -13,7 +13,7 @@
 
 source ~/.bashrc
 
-/home/150/sxk150/miniconda3/envs/snakemake/bin/snakemake -s /home/150/sxk150/mcf10a_xenografts/Snakefile all_kallisto_quant\
+/home/150/sxk150/miniconda3/envs/snakemake/bin/snakemake -s /home/150/sxk150/mcf10a_xenografts/Snakefile all_star_align\
     --configfile /home/150/sxk150/mcf10a_xenografts/config.yaml\
 	--use-conda\
 	--cluster "qsub -P {cluster.P}\
