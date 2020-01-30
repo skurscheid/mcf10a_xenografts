@@ -27,8 +27,8 @@ rule star_align:
         fq2 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end2.fastq.gz",
         index = lambda wildcards: config["params"]["STAR"]["index"][wildcards["ref_index"]]["gadi"]
     output:
-        permdir = directory("star/{library}/{ref_index}/{batch}/{sample}/"),
-        tempDir = directory("star/temp/{library}/{batch}/{sample}")
+        permDir = directory("star/{library}/{ref_index}/{batch}/{sample}/"),
+        tempDir = directory("star/temp/{library}/{ref_index}/{batch}/{sample}")
     shell:
         """
             STAR --runThreadN {threads}\
@@ -37,7 +37,7 @@ rule star_align:
                 --outFileNamePrefix {output.permDir}\
                 --outTmpDir {output.tempDir}\
                 --outReadsUnmapped Fastq\
-                --outSAMtype BAM\
+                --outSAMtype BAM Unsorted\
                 --quantMode GeneCounts\
                 {params.encodeOptions}
         """
