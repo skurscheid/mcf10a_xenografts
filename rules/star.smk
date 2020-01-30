@@ -28,14 +28,12 @@ rule star_align:
         index = lambda wildcards: config["params"]["STAR"]["index"][wildcards["ref_index"]]["gadi"]
     output:
         permDir = directory("star/{library}/{ref_index}/{batch}/{sample}/"),
-        tempDir = directory("star/temp/{library}/{ref_index}/{batch}/{sample}")
     shell:
         """
             STAR --runThreadN {threads}\
                 --genomeDir {input.index}\
                 --readFilesIn {input.fq1} {input.fq2}\
                 --outFileNamePrefix {output.permDir}\
-                --outTmpDir {output.tempDir}\
                 --outReadsUnmapped Fastq\
                 --outSAMtype BAM Unsorted\
                 --quantMode GeneCounts\

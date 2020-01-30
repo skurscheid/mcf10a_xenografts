@@ -23,6 +23,7 @@ source ~/.bashrc
                     -l wd\
                     -l walltime={cluster.walltime}\
 		    -l storage={cluster.storage}\
+		    -l jobfs={cluster.jobfs}\
                     -M {cluster.M}\
                     -m {cluster.m}\
                     -e {cluster.error_out_dir} \
