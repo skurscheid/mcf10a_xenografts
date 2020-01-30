@@ -6,6 +6,7 @@ channels:
 dependencies:
   - _libgcc_mutex=0.1
   - _openmp_mutex=4.5
+  - bamtools=2.5.1
   - fastp=0.20.0
   - hdf5=1.10.5
   - kallisto=0.46.1
@@ -13,5 +14,6 @@ dependencies:
   - libgfortran-ng=7.3.0
   - libgomp=9.2.0
   - libstdcxx-ng=9.2.0
+  - ngs-disambiguate=2018.05.03
   - star=2.7.3a
   - zlib=1.2.11
