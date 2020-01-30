@@ -39,5 +39,6 @@ rule star_align:
                 --outReadsUnmapped Fastq\
                 --outSAMtype BAM Unsorted\
                 --quantMode GeneCounts\
+                --readFilesCommand zcat\
                 {params.encodeOptions}
         """
