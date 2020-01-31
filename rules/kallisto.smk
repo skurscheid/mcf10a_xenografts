@@ -27,7 +27,7 @@ rule kallisto_quant:
         fq2 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end2.fastq.gz",
         index = config["params"]["kallisto"]["index"]["mmus_hsap_ensembl99"]["gadi"]
     output:
-        directory("kallisto/{library}/{batch}/{sample}")
+        directory("kallisto/{library}/{batch}/{sample}/")
     shell:
         """
         kallisto quant {input.fq1} {input.fq2}\
