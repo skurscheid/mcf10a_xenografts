@@ -40,3 +40,20 @@ rule star_align:
                 --readFilesCommand zcat\
                 {params.encodeOptions}
         """
+
+rule samtools_sortn:
+    conda:
+        "../envs/xenografts.yaml"
+    version:
+        "1"
+    threads:
+        8 
+    params:
+        samtoolOptions = "-m 1G"
+    input:
+        unsorted_bam: "star/{library}/{ref_index}/{batch}/{sample}/Aligned.out.bam"
+    output:
+        nsorted_bam: "samtools/{library}/{ref_index}/{batch}/{sample}/nsorted.bam"
+    shell:
+        "samtools sort -n {params.samtoolOptions} -@ {threads} {input.unsorted_bam} -T {wildcards.sample}.sorted -o {output.nsorted_bam}"
+
