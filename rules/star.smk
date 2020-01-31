@@ -51,9 +51,9 @@ rule samtools_sortn:
     params:
         samtoolOptions = "-m 1G"
     input:
-        unsorted_bam: "star/{library}/{ref_index}/{batch}/{sample}/Aligned.out.bam"
+        unsorted_bam = "star/{library}/{ref_index}/{batch}/{sample}/Aligned.out.bam"
     output:
-        nsorted_bam: "samtools/{library}/{ref_index}/{batch}/{sample}/nsorted.bam"
+        nsorted_bam = "samtools/{library}/{ref_index}/{batch}/{sample}/nsorted.bam"
     shell:
         "samtools sort -n {params.samtoolOptions} -@ {threads} {input.unsorted_bam} -T {wildcards.sample}.sorted -o {output.nsorted_bam}"
 
