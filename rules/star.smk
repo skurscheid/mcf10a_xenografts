@@ -17,11 +17,12 @@ rule star_align:
     conda:
         "../envs/xenografts.yaml"
     version:
-        "1"
+        "2"
     threads:
         8 
     params:
-        encodeOptions = "--outFilterType BySJout --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04"
+        encodeOptions = "--outFilterType BySJout --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04",
+        disambiguateOptions = "--outSAMattributes NH"
     input:
         fq1 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end1.fastq.gz",
         fq2 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end2.fastq.gz",
@@ -38,7 +39,8 @@ rule star_align:
                 --outSAMtype BAM Unsorted\
                 --quantMode GeneCounts\
                 --readFilesCommand zcat\
-                {params.encodeOptions}
+                {params.encodeOptions}\
+                {params.disambiguateOptions}
         """
 
 rule samtools_sortn:
