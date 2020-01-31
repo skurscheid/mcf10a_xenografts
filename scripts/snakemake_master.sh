@@ -11,9 +11,11 @@
 #PBS -m abe
 #PBS -l storage=scratch/kv78
 
+target=${cli_target}
+
 source ~/.bashrc
 
-/home/150/sxk150/miniconda3/envs/snakemake/bin/snakemake -s /home/150/sxk150/mcf10a_xenografts/Snakefile all_star_align\
+/home/150/sxk150/miniconda3/envs/snakemake/bin/snakemake -s /home/150/sxk150/mcf10a_xenografts/Snakefile ${cli_target}\
     --configfile /home/150/sxk150/mcf10a_xenografts/config.yaml\
 	--use-conda\
 	--cluster "qsub -P {cluster.P}\
