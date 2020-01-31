@@ -28,7 +28,7 @@ rule star_align:
         fq2 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end2.fastq.gz",
         index = lambda wildcards: config["params"]["STAR"]["index"][wildcards["ref_index"]]["gadi"]
     output:
-        permDir = directory("star/{library}/{ref_index}/{batch}/{sample}/"),
+        permDir = directory("star/{library}/{ref_index}/{batch}/{sample}"),
     shell:
         """
             STAR --runThreadN {threads}\
