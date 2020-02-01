@@ -22,7 +22,7 @@ rule star_align:
         8 
     params:
         encodeOptions = "--outFilterType BySJout --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04",
-        disambiguateOptions = "--outSAMattributes NH"
+        disambiguateOptions = "--outSAMattributes NH NM"
     input:
         fq1 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end1.fastq.gz",
         fq2 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end2.fastq.gz",
@@ -53,9 +53,9 @@ rule samtools_sortn:
     params:
         samtoolOptions = "-m 1G"
     input:
-        unsorted_bam = "star/{library}/{ref_index}/{batch}/{sample}/Aligned.out.bam"
+        unsorted_bam = "star/{library}/{ref_index}/{batch}/{sample}"
     output:
         nsorted_bam = "samtools/{library}/{ref_index}/{batch}/{sample}/nsorted.bam"
     shell:
-        "samtools sort -n {params.samtoolOptions} -@ {threads} {input.unsorted_bam} -T {wildcards.sample}.sorted -o {output.nsorted_bam}"
+        "samtools sort -n {params.samtoolOptions} -@ {threads} {input.unsorted_bam}/Aligned.out.bam -T {wildcards.sample}.sorted -o {output.nsorted_bam}"
 

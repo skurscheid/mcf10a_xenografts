@@ -38,4 +38,4 @@ source ~/.bashrc
     --keep-going\
 	-pr\
 	-R `/home/150/sxk150/miniconda3/envs/snakemake/bin/snakemake -s /home/150/sxk150/mcf10a_xenografts/Snakefile ${cli_target}\
-	    --configfile /home/150/sxk150/mcf10a_xenografts/config.yaml -d /scratch/kv78/mcf10a-xenografts --list-code-changes --list-params-changes`
+	    --configfile /home/150/sxk150/mcf10a_xenografts/config.yaml -d /scratch/kv78/mcf10a-xenografts --list-params-changes`

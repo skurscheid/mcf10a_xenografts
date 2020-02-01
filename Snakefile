@@ -31,7 +31,7 @@ rule all_fastp_rna_seq:
 
 rule all_kallisto_quant:
     input:
-        expand("kallisto/RNA-Seq/{batch}/{sample}/",
+        expand("kallisto/RNA-Seq/{batch}/{sample}",
                 batch = "N1902403_RD_30-210828544_eukRNASEQ",
                 sample = list(units["sample"]))
 
