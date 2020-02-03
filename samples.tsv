@@ -1,47 +1,54 @@
-sample_id	sample	library	condition	description
-f00	HP1-B_L6	RNA-Seq	HP1-B	cell_line
-f01	KDD5-3_L4	RNA-Seq	KDD5-3	
-f02	122-L_L3	RNA-Seq	122-L	xenograft
-f03	HP1-C_L6	RNA-Seq	HP1-C	cell_line
-f04	116-R_L6	RNA-Seq	116-R	xenograft
-f05	NTCD2-2_L5	RNA-Seq	NTCD2-2	
-f06	NTCD5-2_L4	RNA-Seq	NTCD5-2	
-f07	1-L_L6	RNA-Seq	1-L	xenograft
-f08	KDD2-1_L5	RNA-Seq	KDD2-1	
-f09	2-R_L3	RNA-Seq	2-R	xenograft
-f10	9-L_L7	RNA-Seq	9-L	xenograft
-f11	KDD2-2_L5	RNA-Seq	KDD2-2	
-f12	NTCD5-3_L4	RNA-Seq	NTCD5-3	
-f13	115-R_L3	RNA-Seq	115-R	xenograft
-f14	115-L_L7	RNA-Seq	115-L	xenograft
-f15	KDD5-2_L4	RNA-Seq	KDD5-2	
-f16	10-R_L3	RNA-Seq	10-R	xenograft
-f17	122-R_L6	RNA-Seq	122-R	xenograft
-f18	NTCD2-3_L5	RNA-Seq	NTCD2-3	
-f19	125-L_L7	RNA-Seq	125-L	xenograft
-f20	NTCD2-1_L5	RNA-Seq	NTCD2-1	
-f21	KDD2-3_L5	RNA-Seq	KDD2-3	
-f22	9-R_L7	RNA-Seq	9-R	xenograft
-f23	NTCD5-1_L3	RNA-Seq	NTCD5-1	
-f24	103-R_L7	RNA-Seq	103-R	xenograft
-f25	124-L_L7	RNA-Seq	124-L	xenograft
-f26	KDD5-1_L4	RNA-Seq	KDD5-1	
-f27	124-R_L7	RNA-Seq	124-R	xenograft
-f28	10-L_L6	RNA-Seq	10-L	xenograft
-f29	HP1-A_L6	RNA-Seq	HP1-A	cell_line
-f30	103-L_L3	RNA-Seq	103-L	xenograft
-f31	2-L_L7	RNA-Seq	2-L	xenograft
-f32	MCF10A	H2AZ	WT	high_digest
-f33	MCF10A	H2AZ	WT	low_digest
-f34	MCF10A	Input	WT	high_digest
-f35	MCF10A	Input	WT	low_digest
-f36	MCF10A	Input	shZ_KD	high_digest
-f37	MCF10A	Input	shZ_KD	low_digest
-f38	MCF10A	H2AZ	TGFb	high_digest
-f39	MCF10A	H2AZ	TGFb	low_digest
-f40	MCF10A	Input	TGFb	high_digest
-f41	MCF10A	Input	TGFb	low_digest
-f42	MCF10ACa1a	H2AZ	WT	high_digest
-f43	MCF10ACa1a	H2AZ	WT	low_digest
-f44	MCF10ACa1a	Input	WT	high_digest
-f45	MCF10ACa1a	Input	WT	low_digest
+sample_id	sample	library	conditionA	description	conditionB
+f00	HP1-B_L6	RNA-Seq	HP1-B	cell_line	"MCF10A cells with
+  Hp1a knockdown "
+f01	KDD5-3_L4	RNA-Seq	KDD5-3		""
+f02	122-L_L3	RNA-Seq	122-L	xenograft	"scrambled sequence
+  tumor"
+f03	HP1-C_L6	RNA-Seq	HP1-C	cell_line	"MCF10A cells with
+  Hp1a knockdown "
+f04	116-R_L6	RNA-Seq	116-R	xenograft	"scrambled sequence
+  tumor"
+f05	NTCD2-2_L5	RNA-Seq	NTCD2-2		""
+f06	NTCD5-2_L4	RNA-Seq	NTCD5-2		""
+f07	1-L_L6	RNA-Seq	1-L	xenograft	"scrambled sequence
+  tumor"
+f08	KDD2-1_L5	RNA-Seq	KDD2-1		""
+f09	2-R_L3	RNA-Seq	2-R	xenograft	wildtype tumor
+f10	9-L_L7	RNA-Seq	9-L	xenograft	small shH2A.Z tumor
+f11	KDD2-2_L5	RNA-Seq	KDD2-2		""
+f12	NTCD5-3_L4	RNA-Seq	NTCD5-3		""
+f13	115-R_L3	RNA-Seq	115-R	xenograft	large shH2A.Z tumor
+f14	115-L_L7	RNA-Seq	115-L	xenograft	large shH2A.Z tumor
+f15	KDD5-2_L4	RNA-Seq	KDD5-2		""
+f16	10-R_L3	RNA-Seq	10-R	xenograft	wildtype tumor
+f17	122-R_L6	RNA-Seq	122-R	xenograft	"scrambled sequence
+  tumor"
+f18	NTCD2-3_L5	RNA-Seq	NTCD2-3		""
+f19	125-L_L7	RNA-Seq	125-L	xenograft	wildtype tumor
+f20	NTCD2-1_L5	RNA-Seq	NTCD2-1		""
+f21	KDD2-3_L5	RNA-Seq	KDD2-3		""
+f22	9-R_L7	RNA-Seq	9-R	xenograft	large shH2A.Z tumor
+f23	NTCD5-1_L3	RNA-Seq	NTCD5-1		""
+f24	103-R_L7	RNA-Seq	103-R	xenograft	large shH2A.Z tumor
+f25	124-L_L7	RNA-Seq	124-L	xenograft	small shH2A.Z tumor
+f26	KDD5-1_L4	RNA-Seq	KDD5-1		""
+f27	124-R_L7	RNA-Seq	124-R	xenograft	small shH2A.Z tumor
+f28	10-L_L6	RNA-Seq	10-L	xenograft	wildtype tumor
+f29	HP1-A_L6	RNA-Seq	HP1-A	cell_line	"MCF10A cells with
+  Hp1a knockdown "
+f30	103-L_L3	RNA-Seq	103-L	xenograft	large shH2A.Z tumor
+f31	2-L_L7	RNA-Seq	2-L	xenograft	wildtype tumor
+f32	MCF10A	H2AZ	WT	high_digest	""
+f33	MCF10A	H2AZ	WT	low_digest	""
+f34	MCF10A	Input	WT	high_digest	""
+f35	MCF10A	Input	WT	low_digest	""
+f36	MCF10A	Input	shZ_KD	high_digest	""
+f37	MCF10A	Input	shZ_KD	low_digest	""
+f38	MCF10A	H2AZ	TGFb	high_digest	""
+f39	MCF10A	H2AZ	TGFb	low_digest	""
+f40	MCF10A	Input	TGFb	high_digest	""
+f41	MCF10A	Input	TGFb	low_digest	""
+f42	MCF10ACa1a	H2AZ	WT	high_digest	""
+f43	MCF10ACa1a	H2AZ	WT	low_digest	""
+f44	MCF10ACa1a	Input	WT	high_digest	""
+f45	MCF10ACa1a	Input	WT	low_digest	""
