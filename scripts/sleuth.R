@@ -1,5 +1,27 @@
 library(sleuth)
 library(data.table)
+library(biomaRt)
+library(tximport)
+
+# prepare annotation for hsap/mmus mixed reference
+mart.hsap <- biomaRt::useMart(biomart = "ENSEMBL_MART_ENSEMBL",
+                         dataset = "hsapiens_gene_ensembl",
+                         host = 'ensembl.org')
+mart.mmus <- biomaRt::useMart(biomart = "ENSEMBL_MART_ENSEMBL",
+                              dataset = "mmusculus_gene_ensembl",
+                              host = 'ensembl.org')
+
+t2g <- data.table(biomaRt::getBM(attributes = c("ensembl_transcript_id", "ensembl_gene_id",
+                                                "external_gene_name", "ensembl_transcript_id_version"), mart = mart.hsap))
+
+t2g <- rbind(t2g, data.table(biomaRt::getBM(attributes = c("ensembl_transcript_id", "ensembl_gene_id",
+                                                           "external_gene_name", "ensembl_transcript_id_version"), mart = mart.mmus)))
+
+
+t2g <- dplyr::rename(t2g, target_id = ensembl_transcript_id,
+                          ens_gene = ensembl_gene_id, 
+                          ext_gene = external_gene_name, 
+                          target_id_version = ensembl_transcript_id_version)
 
 samples <- fread("~/Development/workflows/mcf10a_xenografts/samples.tsv")
 units <- fread("~/Development/workflows/mcf10a_xenografts/units_rna-seq.tsv")
@@ -11,4 +33,13 @@ xenograft_samples$directory <- paste("/home/sebastian/mount/gadi/mcf10a-xenograf
 s2c <- dplyr::select(xenograft_samples, sample, condition = description) 
 s2c <- dplyr::mutate(s2c, path = xenograft_samples$directory )
 
-so <- sleuth_prep(s2c, extra_bootstrap_summary = F)
+so <- sleuth_prep(s2c, extra_bootstrap_summary = T, target_mapping = t2g)
+kt <- kallisto_table(so)
+
+# import data with tximport
+abundances <- tximport(files = paste(xenograft_samples$directory, "abundance.h5", sep = "/"), 
+                       type = "kallisto", countsFromAbundance = "scaledTPM", 
+                       tx2gene = t2g[,c("target_id_version", "ext_gene")])
+
+
+
