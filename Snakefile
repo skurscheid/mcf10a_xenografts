@@ -40,8 +40,22 @@ rule all_star_align:
         expand("star/RNA-Seq/{ref_index}/{batch}/{sample}/",
                 ref_index = ["mmus_ensembl99", "hsap_ensembl99"],
                 batch = "N1902403_RD_30-210828544_eukRNASEQ",
-                sample = list(units["sample"])[0])
+                sample = list(units["sample"])[2])
+
+rule all_samtools_sortn:
+    input:
+        expand("samtools/RNA-Seq/{ref_index}/{batch}/{sample}/nsorted.bam",
+                ref_index = ["mmus_ensembl99", "hsap_ensembl99"],
+                batch = "N1902403_RD_30-210828544_eukRNASEQ",
+                sample = list(units["sample"])[2])
+
+rule all_disambiguate:
+    input:
+        expand("ngs_disambiguate/RNA-Seq/{batch}/{sample}/",
+                batch = "N1902403_RD_30-210828544_eukRNASEQ",
+                sample = list(units["sample"])[2])
 
 include: "rules/fastp.smk"
 include: "rules/kallisto.smk"
 include: "rules/star.smk"
+include: "rules/ngs_disambiguate.smk"

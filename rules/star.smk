@@ -17,11 +17,12 @@ rule star_align:
     conda:
         "../envs/xenografts.yaml"
     version:
-        "1"
+        "2"
     threads:
         8 
     params:
-        encodeOptions = "--outFilterType BySJout --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04"
+        encodeOptions = "--outFilterType BySJout --alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04",
+        disambiguateOptions = "--outSAMattributes NH NM"
     input:
         fq1 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end1.fastq.gz",
         fq2 = "fastp/trimmed/pe/{library}/{batch}/{sample}.end2.fastq.gz",
@@ -38,5 +39,23 @@ rule star_align:
                 --outSAMtype BAM Unsorted\
                 --quantMode GeneCounts\
                 --readFilesCommand zcat\
-                {params.encodeOptions}
+                {params.encodeOptions}\
+                {params.disambiguateOptions}
         """
+
+rule samtools_sortn:
+    conda:
+        "../envs/xenografts.yaml"
+    version:
+        "1"
+    threads:
+        8 
+    params:
+        samtoolOptions = "-m 1G"
+    input:
+        unsorted_bam = "star/{library}/{ref_index}/{batch}/{sample}"
+    output:
+        nsorted_bam = "samtools/{library}/{ref_index}/{batch}/{sample}/nsorted.bam"
+    shell:
+        "samtools sort -n {params.samtoolOptions} -@ {threads} {input.unsorted_bam}/Aligned.out.bam -T {wildcards.sample}.sorted -o {output.nsorted_bam}"
+
