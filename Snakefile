@@ -49,6 +49,13 @@ rule all_samtools_sortn:
                 batch = "N1902403_RD_30-210828544_eukRNASEQ",
                 sample = list(units["sample"])[2])
 
+rule all_disambiguate:
+    input:
+        expand("ngs_disambiguate/RNA-Seq/{batch}/{sample}/",
+                batch = "N1902403_RD_30-210828544_eukRNASEQ",
+                sample = list(units["sample"])[2])
+
 include: "rules/fastp.smk"
 include: "rules/kallisto.smk"
 include: "rules/star.smk"
+include: "rules/ngs_disambiguate.smk"
