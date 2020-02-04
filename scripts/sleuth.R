@@ -18,22 +18,23 @@ t2g <- rbind(t2g, data.table(biomaRt::getBM(attributes = c("ensembl_transcript_i
                                                            "external_gene_name", "ensembl_transcript_id_version"), mart = mart.mmus)))
 
 
-t2g <- dplyr::rename(t2g, target_id = ensembl_transcript_id,
+t2g <- dplyr::rename(t2g, target_id = ensembl_transcript_id_version,
                           ens_gene = ensembl_gene_id, 
-                          ext_gene = external_gene_name, 
-                          target_id_version = ensembl_transcript_id_version)
+                          ext_gene = external_gene_name)
 
-samples <- fread("~/Development/workflows/mcf10a_xenografts/samples.tsv")
-units <- fread("~/Development/workflows/mcf10a_xenografts/units_rna-seq.tsv")
 
-list.files("~/mount/gadi/mcf10a-xenografts/kallisto/RNA-Seq/N1902403_RD_30-210828544_eukRNASEQ", include.dirs = T, full.names = T)
+samples <- fread("/home/sebastian/Development/workflows/mcf10a_xenografts/samples.tsv")
+units <- fread("/home/sebastian/Development/workflows/mcf10a_xenografts/units_rna-seq.tsv")
+
+list.files("/home/sebastian/mount/gadi/mcf10a-xenografts/kallisto/RNA-Seq/N1902403_RD_30-210828544_eukRNASEQ", include.dirs = T, full.names = T)
 xenograft_samples <- samples[library == "RNA-Seq" & description == "xenograft"]
 xenograft_samples$directory <- paste("/home/sebastian/mount/gadi/mcf10a-xenografts/kallisto/RNA-Seq/N1902403_RD_30-210828544_eukRNASEQ/", xenograft_samples$sample, sep ="")
 
 s2c <- dplyr::select(xenograft_samples, sample, condition = description) 
 s2c <- dplyr::mutate(s2c, path = xenograft_samples$directory )
 
-so <- sleuth_prep(s2c, extra_bootstrap_summary = T, target_mapping = t2g)
+so <- sleuth_prep(s2c, extra_bootstrap_summary = T, target_mapping = t2g, aggregation_column="ext_gene", num_cores=16)
+
 kt <- kallisto_table(so)
 
 # import data with tximport
