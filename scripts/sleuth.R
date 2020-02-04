@@ -30,10 +30,13 @@ list.files("/home/sebastian/mount/gadi/mcf10a-xenografts/kallisto/RNA-Seq/N19024
 xenograft_samples <- samples[library == "RNA-Seq" & description == "xenograft"]
 xenograft_samples$directory <- paste("/home/sebastian/mount/gadi/mcf10a-xenografts/kallisto/RNA-Seq/N1902403_RD_30-210828544_eukRNASEQ/", xenograft_samples$sample, sep ="")
 
-s2c <- dplyr::select(xenograft_samples, sample, condition = conditionB) 
+s2c <- dplyr::select(xenograft_samples, sample, condition = cell_type, knockdown = knockdown, tumor_size = tumor_size) 
 s2c <- dplyr::mutate(s2c, path = xenograft_samples$directory )
 
 so <- sleuth_prep(s2c, extra_bootstrap_summary = T, target_mapping = t2g, aggregation_column="ext_gene", num_cores=16)
+
+plot_pca(so, color_by = 'condition')
+
 
 kt <- kallisto_table(so)
 
