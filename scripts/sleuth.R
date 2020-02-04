@@ -30,10 +30,11 @@ list.files("~/mount/gadi/mcf10a-xenografts/kallisto/RNA-Seq/N1902403_RD_30-21082
 xenograft_samples <- samples[library == "RNA-Seq" & description == "xenograft"]
 xenograft_samples$directory <- paste("/home/sebastian/mount/gadi/mcf10a-xenografts/kallisto/RNA-Seq/N1902403_RD_30-210828544_eukRNASEQ/", xenograft_samples$sample, sep ="")
 
-s2c <- dplyr::select(xenograft_samples, sample, condition = description) 
+s2c <- dplyr::select(xenograft_samples, sample, condition = conditionB) 
 s2c <- dplyr::mutate(s2c, path = xenograft_samples$directory )
 
 so <- sleuth_prep(s2c, extra_bootstrap_summary = T, target_mapping = t2g)
+
 kt <- kallisto_table(so)
 
 # import data with tximport
@@ -41,5 +42,8 @@ abundances <- tximport(files = paste(xenograft_samples$directory, "abundance.h5"
                        type = "kallisto", countsFromAbundance = "scaledTPM", 
                        tx2gene = t2g[,c("target_id_version", "ext_gene")])
 
-
+dTabund <- as.data.table(abundances$abundance)
+colnames(dTabund) <- xenograft_samples$sample
+pca1 <- ade4::dudi.pca(t(dTabund))
+ade4::s.class(pca1$li, xax = 1, yax = 2, fac = as.factor(xenograft_samples$conditionB))
 
