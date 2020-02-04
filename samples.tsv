@@ -20,7 +20,7 @@ f12	NTCD5-3_L4	RNA-Seq	NTCD5-3			""
 f13	115-R_L3	RNA-Seq	115-R	xenograft	large shH2A.Z tumor	shH2AZ	large	kd
 f14	115-L_L7	RNA-Seq	115-L	xenograft	large shH2A.Z tumor	shH2AZ	large	kd
 f15	KDD5-2_L4	RNA-Seq	KDD5-2			""	""	""
-f16	10-R_L3	RNA-Seq	10-R	xenograft	wildtype tumor	""	""	""
+f16	10-R_L3	RNA-Seq	10-R	xenograft	wildtype tumor	""	""	wt
 f17	122-R_L6	RNA-Seq	122-R	xenograft	"scrambled sequence
   tumor"	ntc	""	kd
 f18	NTCD2-3_L5	RNA-Seq	NTCD2-3			""	""	""
