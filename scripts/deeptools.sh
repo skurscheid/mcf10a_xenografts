@@ -15,6 +15,7 @@ if [ ! -d $deeptoolsDir/bamCoverage ]; then
     mkdir -p $deeptoolsDir/bamCoverage
 fi
 
+export samples="A_shH2AZ_Inp_H_r1_R1 A_shH2AZ_Inp_H_r2_R1"
 for sample in $samples; do
    # if [ ! -f ${deeptoolsDir}/bamCoverage/${sample}.bw ]; then
         bamCoverage \
@@ -32,7 +33,54 @@ done
 if [ ! -d ${deeptoolsDir}/bigwigCompare ]; then
     mkdir -p ${deeptoolsDir}/bigwigCompare
 fi
+# consolidate replicates into merged bigwigs for plotting
+export samples="A_H2AZ_H A_Inp_H A_shH2AZ_Inp_H A_TGFb_H2AZ_H A_TGFb_Inp_H CA1a_H2AZ_H CA1a_Inp_H"
+export samples="A_shH2AZ_Inp_H"
 
+for i in $samples; do ls ${deeptoolsDir}/bamCoverage/${sample}*_noncovered.bw; done
+
+for sample in $samples; do
+    if [ -f ${deeptoolsDir}/bamCoverage/${sample}_r1_R1_noncovered.bw ];
+    then
+        bigwigCompare \
+            --bigwig1 ${deeptoolsDir}/bamCoverage/${sample}_r1_R1_noncovered.bw\
+            --bigwig2 ${deeptoolsDir}/bamCoverage/${sample}_r2_R1_noncovered.bw\
+            --skipZeroOverZero \
+            --operation mean\
+            --binSize 10\
+            --blackListFileName ${rootDir}/non_covered_hg38_ensembl.bed\
+            --numberOfProcessors 32\
+            --outFileName ${deeptoolsDir}/bigwigCompare/${sample}_noncovered.bw
+    else 
+        echo 'input bigwig for ' ${sample} ' missing'
+    fi
+done
+
+# run bigwigCompare on pooled samples
+bigwigCompare \
+    --bigwig1 ${deeptoolsDir}/bigwigCompare/CA1a_H2AZ_H_noncovered.bw\
+    --bigwig2 ${deeptoolsDir}/bigwigCompare/CA1a_Inp_H_noncovered.bw\
+    --binSize 10\
+    --numberOfProcessors 32\
+    --blackListFileName ${rootDir}/non_covered_hg38_ensembl.bed\
+    --outFileName ${deeptoolsDir}/bigwigCompare/CA1a_H2AZ_vs_Inp_H.bw
+
+bigwigCompare \
+    --bigwig1 ${deeptoolsDir}/bigwigCompare/A_TGFb_H2AZ_H_noncovered.bw\
+    --bigwig2 ${deeptoolsDir}/bigwigCompare/A_TGFb_Inp_H_noncovered.bw\
+    --binSize 10\
+    --numberOfProcessors 32\
+    --blackListFileName ${rootDir}/non_covered_hg38_ensembl.bed\
+    --outFileName ${deeptoolsDir}/bigwigCompare/A_TGFb_H2AZ_vs_Inp_H.bw
+
+bigwigCompare \
+    --bigwig1 ${deeptoolsDir}/bigwigCompare/A_H2AZ_H_noncovered.bw\
+    --bigwig2 ${deeptoolsDir}/bigwigCompare/A_Inp_H_noncovered.bw\
+    --binSize 10\
+    --numberOfProcessors 32\
+    --blackListFileName ${rootDir}/non_covered_hg38_ensembl.bed\
+    --outFileName ${deeptoolsDir}/bigwigCompare/A_H2AZ_vs_Inp_H.bw
+# 
 bigwigCompare \
     --bigwig1 ${deeptoolsDir}/bamCoverage/CA1a_H2AZ_H_r1_R1_noncovered.bw\
     --bigwig2 ${deeptoolsDir}/bamCoverage/CA1a_Inp_H_r1_R1_noncovered.bw\
@@ -48,14 +96,6 @@ bigwigCompare \
     --numberOfProcessors 32\
     --blackListFileName ${rootDir}/non_covered_hg38_ensembl.bed\
     --outFileName ${deeptoolsDir}/bigwigCompare/CA1a_H2AZ_H_r2_R1.bw
-
-if [ ! -d ${deeptoolsDir}/computeMatrix/TSS/LZ_vs_WT/ ]; then
-    mkdir -p ${deeptoolsDir}/computeMatrix/TSS/LZ_vs_WT/
-fi
-
-if [ ! -d ${deeptoolsDir}/plotHeatmap/TSS/LZ_vs_WT/ ]; then
-    mkdir -p ${deeptoolsDir}/plotHeatmap/TSS/LZ_vs_WT/
-fi
 
 export regions="LZ_vs_WT SZ_vs_WT"
 
@@ -192,3 +232,5 @@ plotHeatmap \
     --matrixFile ${deeptoolsDir}/computeMatrix/TSS/${region}/CA1a_H2AZ_H_r2_R1.matrix.gz\
     --outFileName ${deeptoolsDir}/plotHeatmap/TSS/${region}/CA1a_H2AZ_H_r2_R1.pdf\
     --plotTitle "CA1a_H2AZ_H_r2 ${region}"
+
+

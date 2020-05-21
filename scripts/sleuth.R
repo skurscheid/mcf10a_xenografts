@@ -11,11 +11,12 @@ mart.mmus <- biomaRt::useMart(biomart = "ENSEMBL_MART_ENSEMBL",
                               dataset = "mmusculus_gene_ensembl",
                               host = 'ensembl.org')
 
-t2g <- data.table(biomaRt::getBM(attributes = c("ensembl_transcript_id", "ensembl_gene_id",
-                                                "external_gene_name", "ensembl_transcript_id_version"), mart = mart.hsap))
+t2g <- data.table(biomaRt::getBM(attributes = c("ensembl_transcript_id_version", "ensembl_gene_id",
+                                                "external_gene_name", ""), mart = mart.hsap))
 
-t2g <- rbind(t2g, data.table(biomaRt::getBM(attributes = c("ensembl_transcript_id", "ensembl_gene_id",
-                                                           "external_gene_name", "ensembl_transcript_id_version"), mart = mart.mmus)))
+t2g <- rbind(t2g, data.table(biomaRt::getBM(attributes = c("ensembl_transcript_id_version", "ensembl_gene_id",
+                                                           "external_gene_name"), mart = mart.mmus)))
+
 
 
 t2g <- dplyr::rename(t2g, target_id = ensembl_transcript_id_version,
