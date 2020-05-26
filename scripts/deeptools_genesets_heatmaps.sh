@@ -14,7 +14,7 @@ export region_names=$(for i in $regions; do echo $i | awk -F/ '{print $NF}' | cu
 
 computeMatrix reference-point \
     --regionsFileName $regions\
-    --scoreFileName ${deeptoolsDir}/bigwigCompare/CA1a_H2AZ_vs_Inp_H.bw ${deeptoolsDir}/bigwigCompare/A_TGFb_H2AZ_vs_Inp_H.bw ${deeptoolsDir}/bigwigCompare/A_H2AZ_vs_Inp_H.bw\
+    --scoreFileName ${deeptoolsDir}/bigwigCompare/CA1a_H2AZ_vs_Inp_H.bw ${deeptoolsDir}/bigwigCompare/A_H2AZ_vs_Inp_H.bw\
     --outFileName ${deeptoolsDir}/computeMatrix/TSS/genesets.matrix.gz\
     --outFileSortedRegions ${deeptoolsDir}/computeMatrix/TSS/genesets.bed\
     --referencePoint TSS\
@@ -39,10 +39,10 @@ export region_names=$(for i in $regions; do echo $i | awk -F/ '{print $NF}' | cu
 
 computeMatrix reference-point \
     --regionsFileName $regions\
-    --scoreFileName ${deeptoolsDir}/bigwigCompare/CA1a_H2AZ_vs_Inp_H.bw ${deeptoolsDir}/bigwigCompare/A_TGFb_H2AZ_vs_Inp_H.bw ${deeptoolsDir}/bigwigCompare/A_H2AZ_vs_Inp_H.bw\
+    --scoreFileName ${deeptoolsDir}/bigwigCompare/CA1a_H2AZ_vs_Inp_H.bw ${deeptoolsDir}/bigwigCompare/A_H2AZ_vs_Inp_H.bw\
     --outFileName ${deeptoolsDir}/computeMatrix/TSS/genesets_subset.matrix.gz\
     --outFileSortedRegions ${deeptoolsDir}/computeMatrix/TSS/genesets_subset.bed\
-    --samplesLabel "MCF10Ca1a H2A.Z" "MCF10A TGFb H2A.Z" "MCF10A H2A.Z"\
+    --samplesLabel "MCF10Ca1a H2A.Z" "MCF10A H2A.Z"\
     --referencePoint TSS\
     --beforeRegionStartLength 1000\
     --afterRegionStartLength 1000\
@@ -54,3 +54,28 @@ plotHeatmap \
     --matrixFile ${deeptoolsDir}/computeMatrix/TSS/genesets_subset.matrix.gz\
     --regionsLabel ${region_names}\
     --outFileName ${deeptoolsDir}/plotHeatmap/TSS/genesets_subset.pdf
+
+# consolidate selected sets into a meta geneset
+export regionsDir="/home/sebastian/Data/Tremethick/Breast/Xenografts/gene_sets/subset"
+
+export regions=${regionsDir}"/meta_geneset.bed"
+export region_names="\"Meta Geneset [MYC/E2F Target; MTORC; OxPhos\""
+
+computeMatrix reference-point \
+    --regionsFileName $regions\
+    --scoreFileName ${deeptoolsDir}/bigwigCompare/CA1a_H2AZ_vs_Inp_H.bw ${deeptoolsDir}/bigwigCompare/A_H2AZ_vs_Inp_H.bw\
+    --outFileName ${deeptoolsDir}/computeMatrix/TSS/meta_genesets_subset.matrix.gz\
+    --outFileSortedRegions ${deeptoolsDir}/computeMatrix/TSS/meta_genesets_subset.bed\
+    --samplesLabel "MCF10Ca1a H2A.Z" "MCF10A H2A.Z"\
+    --referencePoint TSS\
+    --beforeRegionStartLength 1000\
+    --afterRegionStartLength 1000\
+    --binSize 10\
+    --missingDataAsZero\
+    --skipZeros\
+    --sortRegions keep\
+    -p 32
+
+plotHeatmap \
+    --matrixFile ${deeptoolsDir}/computeMatrix/TSS/meta_genesets_subset.matrix.gz\
+    --outFileName ${deeptoolsDir}/plotHeatmap/TSS/meta_genesets_subset.pdf
